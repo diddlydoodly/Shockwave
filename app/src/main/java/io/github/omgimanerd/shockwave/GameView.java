@@ -11,15 +11,18 @@ import static java.lang.System.currentTimeMillis;
 
 /**
  * Created by omgimanerd on 2/25/15.
+ * Blue = 1 (0 to SCREEN_HEIGHT / 2)
+ * Red = 2 (SCREEN_HEIGHT to SCREEN_HEIGHT)
  */
 public class GameView extends View {
 
   private static final int FPS = 80;
-  public static float screenWidth_;
-  public static float screenHeight_;
+  public static float SCREEN_WIDTH;
+  public static float SCREEN_HEIGHT;
 
   private static final int MENU_MODE = 0;
   private static final int GAME_MODE = 1;
+  private static final int RESULT_MODE = 2;
 
   private long lastUpdateTime_;
   public int mode_;
@@ -29,10 +32,11 @@ public class GameView extends View {
   public GameView(Context context) {
     super(context);
 
-    screenWidth_ = getResources().getDisplayMetrics().widthPixels;
-    screenHeight_ = getResources().getDisplayMetrics().heightPixels;
+    SCREEN_WIDTH = getResources().getDisplayMetrics().widthPixels;
+    SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels;
 
     lastUpdateTime_ = currentTimeMillis();
+    mode_ = MENU_MODE;
     game_ = new Game();
   }
 
@@ -53,8 +57,15 @@ public class GameView extends View {
   public boolean onTouchEvent(MotionEvent event) {
     int action = event.getAction();
 
-    if (action == MotionEvent.ACTION_DOWN) {
-      game_.createShockWave(event.getX(), event.getY());
+    switch (mode_) {
+      case MENU_MODE:
+        mode_ = GAME_MODE;
+        break;
+      case GAME_MODE:
+        if (action == MotionEvent.ACTION_DOWN) {
+          game_.createShockWave(event.getX(), event.getY());
+        }
+        break;
     }
     return true;
   }

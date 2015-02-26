@@ -8,13 +8,13 @@ import android.view.MenuItem;
 
 public class GameActivity extends ActionBarActivity {
 
-  GameView gameView_;
+  private GameView gameView_;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    GameView gameView_ = new GameView(this);
+    gameView_ = new GameView(this);
     setContentView(gameView_);
   }
 }

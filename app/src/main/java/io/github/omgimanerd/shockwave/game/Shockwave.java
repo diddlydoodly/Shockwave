@@ -3,31 +3,32 @@ package io.github.omgimanerd.shockwave.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import static java.lang.System.currentTimeMillis;
 
 /**
  * Created by omgimanerd on 2/25/15.
  */
-public class Shockwave implements Drawable {
+public class Shockwave {
 
+  public static final float MAX_RADIUS = 50;
   private static final float DURATION = 500;
-  private static final float MAX_RADIUS = 40;
   private static final float STROKE_DRAW_WIDTH = 10;
-  private static final int STROKE_COLOR = Color.parseColor("#88000000");
+  private static final int STROKE_COLOR = Color.parseColor("#ABCDEF");
 
   private float x_;
   private float y_;
   private float radius_;
   private long generationTime_;
-  private long expirationTime_;
+  private float percentDone_;
   private Paint paint_;
 
   public Shockwave(float x, float y) {
     x_ = x;
     y_ = y;
     generationTime_ = currentTimeMillis();
-    expirationTime_ = (long) (generationTime_ + DURATION);
+    percentDone_ = 0;
     paint_ = new Paint();
     paint_.setStyle(Paint.Style.STROKE);
     paint_.setStrokeWidth(STROKE_DRAW_WIDTH);
@@ -36,8 +37,9 @@ public class Shockwave implements Drawable {
 
   public void update() {
     if (!isExpired()) {
-      long timeElapsed = expirationTime_ - currentTimeMillis();
-      radius_ = (timeElapsed / DURATION) * MAX_RADIUS;
+      percentDone_ = (currentTimeMillis() - generationTime_) / DURATION;
+      radius_ = percentDone_ * MAX_RADIUS;
+      paint_.setAlpha((int) ((1 - percentDone_) * 255));
     }
   }
 
@@ -46,7 +48,28 @@ public class Shockwave implements Drawable {
   }
 
   public boolean isExpired() {
-    return currentTimeMillis() > expirationTime_;
+    return radius_ >= MAX_RADIUS;
   }
 
+  public float getX() {
+    return x_;
+  }
+
+  public float getY() {
+    return y_;
+  }
+
+  public float[] getXY() {
+    return new float[] {
+        x_, y_
+    };
+  }
+
+  public float getRadius() {
+    return radius_;
+  }
+
+  public float getPercentDone() {
+    return percentDone_;
+  }
 }
