@@ -14,18 +14,19 @@ import io.github.omgimanerd.shockwave.GameView;
 public class Ball {
 
   private static final float MAX_REFLECT_VELOCITY = 15;
-  private static final int BALL_COLOR = Color.parseColor("#FFFFFF");
-  private static final int BALL_RADIUS = 10;
+  private static final int BALL_COLOR = Color.parseColor("#B6B6B6");
 
   private float x_;
   private float y_;
   private float vx_;
   private float vy_;
+  private float radius_;
   private Paint paint_;
 
   public Ball() {
     x_ = GameView.SCREEN_WIDTH / 2;
     y_ = GameView.SCREEN_HEIGHT / 2;
+    radius_ = GameView.SCREEN_WIDTH / 25;
 
     paint_ = new Paint();
     paint_.setColor(BALL_COLOR);
@@ -42,23 +43,25 @@ public class Ball {
         float newVelocity = Math.max((1 - shockwave.getPercentDone()) *
             MAX_REFLECT_VELOCITY, MAX_REFLECT_VELOCITY / 2);
         vx_ = (float) (newVelocity * Math.cos(reflectAngle));
+        // This bit of adjusting prevents the games from going too slow if the
+        // reflection is too steep and the ball keeps bouncing back and forth.
         vy_ = (float) (newVelocity * Math.sin(reflectAngle));
       }
     }
-    if (x_ <= BALL_RADIUS) {
+    if (x_ <= radius_) {
       vx_ *= -1;
-    } else if (x_ > GameView.SCREEN_WIDTH - BALL_RADIUS) {
-      vy_ *= -1;
+    } else if (x_ > GameView.SCREEN_WIDTH - radius_) {
+      vx_ *= -1;
     }
   }
 
   public void render(Canvas canvas) {
-    canvas.drawCircle(x_, y_, BALL_RADIUS, paint_);
+    canvas.drawCircle(x_, y_, radius_, paint_);
   }
 
   public boolean hasCollidedWith(Shockwave shockwave) {
     return Util.getDistance(getXY(), shockwave.getXY()) <=
-        BALL_RADIUS + shockwave.getRadius();
+        radius_ + shockwave.getRadius();
   }
 
   public float getX() {
@@ -73,5 +76,12 @@ public class Ball {
     return new float[] {
         x_, y_
     };
+  }
+
+  public void reset() {
+    x_ = GameView.SCREEN_WIDTH / 2;
+    y_ = GameView.SCREEN_HEIGHT / 2;
+    vx_ = 0;
+    vy_ = 0;
   }
 }

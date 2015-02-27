@@ -23,7 +23,7 @@ public class Game {
   private static final int BLUE_BORDER_COLOR = Color.BLUE;
   private static final int RED_ZONE_COLOR = Color.parseColor("#D32F2F");
   private static final int RED_BORDER_COLOR = Color.RED;
-  private static final int GOAL_HEIGHT = 10;
+  private static final int GOAL_HEIGHT = 20;
 
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
@@ -38,7 +38,7 @@ public class Game {
   public Game() {
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
-    turn_ = 1;
+    turn_ = 0;
 
     borderPaint_ = new Paint();
     borderPaint_.setColor(BORDER_COLOR);
@@ -72,11 +72,18 @@ public class Game {
                     borderPaint_);
     canvas.drawRect(GAME_BORDER, 0,
                     GameView.SCREEN_WIDTH - GAME_BORDER,
-                    GameView.SCREEN_HEIGHT / 2, redZonePaint_);
+                    GameView.SCREEN_HEIGHT / 2, blueZonePaint_);
+    canvas.drawRect(GAME_BORDER, 0,
+                    GameView.SCREEN_WIDTH - GAME_BORDER,
+                    GOAL_HEIGHT, blueGoalZonePaint_);
     canvas.drawRect(GAME_BORDER,
                     GameView.SCREEN_HEIGHT / 2,
                     GameView.SCREEN_WIDTH - GAME_BORDER,
-                    GameView.SCREEN_HEIGHT, blueZonePaint_);
+                    GameView.SCREEN_HEIGHT, redZonePaint_);
+    canvas.drawRect(GAME_BORDER,
+                    GameView.SCREEN_HEIGHT - GOAL_HEIGHT,
+                    GameView.SCREEN_WIDTH - GAME_BORDER,
+                    GameView.SCREEN_HEIGHT, redGoalZonePaint_);
 
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).render(canvas);
@@ -118,26 +125,20 @@ public class Game {
   }
 
   public void reset() {
-
+    turn_ = 0;
+    ball_.reset();
   }
 
   /**
-   * Returns 1 if blue won, returns 2 if blue won, returns 0 if no one has
+   * Returns 1 if red won, returns 2 if blue won, returns 0 if no one has
    * won yet.
    * @return
    */
   public int getWinner() {
-    Rect blueGoal = new Rect(0, 0,
-                             (int) GameView.SCREEN_WIDTH,
-                             GOAL_HEIGHT);
-    Rect redGoal = new Rect(0,
-                            (int) GameView.SCREEN_HEIGHT - GOAL_HEIGHT,
-                            (int) GameView.SCREEN_WIDTH,
-                            (int) GameView.SCREEN_HEIGHT);
-    if (blueGoal.contains((int) ball_.getX(), (int) ball_.getY())) {
-      return 1;
-    } else if (redGoal.contains((int) ball_.getX(), (int) ball_.getY())) {
+    if (ball_.getY() <= 0) {
       return 2;
+    } else if (ball_.getY() >= GameView.SCREEN_HEIGHT) {
+      return 1;
     }
     return 0;
   }

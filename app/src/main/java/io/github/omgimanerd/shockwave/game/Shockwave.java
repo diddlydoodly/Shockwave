@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import io.github.omgimanerd.shockwave.GameView;
+
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -12,14 +14,14 @@ import static java.lang.System.currentTimeMillis;
  */
 public class Shockwave {
 
-  public static final float MAX_RADIUS = 50;
-  private static final float DURATION = 500;
+  private static final float DURATION = 250;
   private static final float STROKE_DRAW_WIDTH = 10;
-  private static final int STROKE_COLOR = Color.parseColor("#ABCDEF");
+  private static final int STROKE_COLOR = Color.parseColor("#CCCCCC");
 
   private float x_;
   private float y_;
   private float radius_;
+  private float maxRadius_;
   private long generationTime_;
   private float percentDone_;
   private Paint paint_;
@@ -27,6 +29,7 @@ public class Shockwave {
   public Shockwave(float x, float y) {
     x_ = x;
     y_ = y;
+    maxRadius_ = GameView.SCREEN_WIDTH / 5;
     generationTime_ = currentTimeMillis();
     percentDone_ = 0;
     paint_ = new Paint();
@@ -38,7 +41,7 @@ public class Shockwave {
   public void update() {
     if (!isExpired()) {
       percentDone_ = (currentTimeMillis() - generationTime_) / DURATION;
-      radius_ = percentDone_ * MAX_RADIUS;
+      radius_ = percentDone_ * maxRadius_;
       paint_.setAlpha((int) ((1 - percentDone_) * 255));
     }
   }
@@ -48,7 +51,7 @@ public class Shockwave {
   }
 
   public boolean isExpired() {
-    return radius_ >= MAX_RADIUS;
+    return radius_ >= maxRadius_;
   }
 
   public float getX() {

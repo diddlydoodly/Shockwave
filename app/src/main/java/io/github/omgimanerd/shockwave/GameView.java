@@ -49,6 +49,11 @@ public class GameView extends View {
           game_.update();
           game_.render(canvas);
         }
+        if (game_.getWinner() != 0) {
+          mode_ = RESULT_MODE;
+        }
+        break;
+      case RESULT_MODE:
         break;
     }
     invalidate();
@@ -65,6 +70,10 @@ public class GameView extends View {
         if (action == MotionEvent.ACTION_DOWN) {
           game_.createShockWave(event.getX(), event.getY());
         }
+        break;
+      case RESULT_MODE:
+        game_.reset();
+        mode_ = GAME_MODE;
         break;
     }
     return true;
