@@ -43,8 +43,6 @@ public class Ball {
         float newVelocity = Math.max((1 - shockwave.getPercentDone()) *
             MAX_REFLECT_VELOCITY, MAX_REFLECT_VELOCITY / 2);
         vx_ = (float) (newVelocity * Math.cos(reflectAngle));
-        // This bit of adjusting prevents the games from going too slow if the
-        // reflection is too steep and the ball keeps bouncing back and forth.
         vy_ = (float) (newVelocity * Math.sin(reflectAngle));
       }
     }
@@ -76,6 +74,43 @@ public class Ball {
     return new float[] {
         x_, y_
     };
+  }
+
+  public void setX(float x) {
+    x_ = x;
+  }
+
+  public void setY(float y) {
+    y_ = y;
+  }
+
+  public void setXY(float[] xy) {
+    x_ = xy[0];
+    y_ = xy[1];
+  }
+
+  public float getRadius() {
+    return radius_;
+  }
+
+  public void setRadius(float radius) {
+    radius_ = radius;
+  }
+
+  public float getVy() {
+    return vy_;
+  }
+
+  public void setVy(float vy) {
+    vy_ = vy;
+  }
+
+  public float getVx() {
+    return vx_;
+  }
+
+  public void setVx(float vx) {
+    vx_ = vx;
   }
 
   public void reset() {

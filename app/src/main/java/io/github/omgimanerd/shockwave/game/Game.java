@@ -23,11 +23,15 @@ public class Game {
   private static final int BLUE_BORDER_COLOR = Color.BLUE;
   private static final int RED_ZONE_COLOR = Color.parseColor("#D32F2F");
   private static final int RED_BORDER_COLOR = Color.RED;
-  private static final int GOAL_HEIGHT = 20;
+  private static final int GOAL_HEIGHT = 25;
+  private static final int MIN_TAP_INTERVAL = 2000;
 
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
-  private int turn_;
+  private boolean canBlueTap_;
+  private long lastBlueTapTime_;
+  private boolean canRedTap_;
+  private long lastRedTapTime_;
 
   private Paint borderPaint_;
   private Paint blueZonePaint_;
@@ -38,7 +42,8 @@ public class Game {
   public Game() {
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
-    turn_ = 0;
+    canRedTap_ = true;
+    canBlueTap_ = true;
 
     borderPaint_ = new Paint();
     borderPaint_.setColor(BORDER_COLOR);
@@ -89,6 +94,13 @@ public class Game {
       shockwaves_.get(i).render(canvas);
     }
     ball_.render(canvas);
+
+    if (currentTimeMillis() > lastBlueTapTime_ + MIN_TAP_INTERVAL) {
+      canBlueTap_ = true;
+    }
+    if (currentTimeMillis() > lastRedTapTime_ + MIN_TAP_INTERVAL) {
+      canRedTap_ = true;
+    }
   }
 
   private boolean isValidShockwavePoint(float x, float y) {
@@ -101,18 +113,15 @@ public class Game {
                             (int) GameView.SCREEN_HEIGHT / 2,
                             (int) GameView.SCREEN_WIDTH,
                             (int) GameView.SCREEN_HEIGHT);
-    if (turn_ == 0) {
-      if (validBlueArea.contains((int) x, (int) y)) {
-        turn_ = 2;
-      } else {
-        turn_ = 1;
-      }
+    if (canBlueTap_ && validBlueArea.contains((int) x, (int) y)) {
+      canBlueTap_ = false;
+      canRedTap_ = true;
+      lastBlueTapTime_ = currentTimeMillis();
       return true;
-    } else if (turn_ == 1 && validBlueArea.contains((int) x, (int) y)) {
-      turn_ = 2;
-      return true;
-    } else if (turn_ == 2 && validRedArea.contains((int) x, (int) y)) {
-      turn_ = 1;
+    } else if (canRedTap_ && validRedArea.contains((int) x, (int) y)) {
+      canBlueTap_ = true;
+      canRedTap_ = false;
+      lastRedTapTime_ = currentTimeMillis();
       return true;
     }
     return false;
@@ -125,7 +134,8 @@ public class Game {
   }
 
   public void reset() {
-    turn_ = 0;
+    canRedTap_ = true;
+    canBlueTap_ = true;
     ball_.reset();
   }
 
