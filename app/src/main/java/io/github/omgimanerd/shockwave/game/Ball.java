@@ -6,8 +6,6 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-import io.github.omgimanerd.shockwave.GameView;
-
 /**
  * Created by omgimanerd on 2/25/15.
  */
@@ -24,9 +22,9 @@ public class Ball {
   private Paint paint_;
 
   public Ball() {
-    x_ = GameView.SCREEN_WIDTH / 2;
-    y_ = GameView.SCREEN_HEIGHT / 2;
-    radius_ = GameView.SCREEN_WIDTH / 25;
+    x_ = Util.SCREEN_WIDTH / 2;
+    y_ = Util.SCREEN_HEIGHT / 2;
+    radius_ = Util.SCREEN_WIDTH / 25;
 
     paint_ = new Paint();
     paint_.setColor(BALL_COLOR);
@@ -48,7 +46,7 @@ public class Ball {
     }
     if (x_ <= radius_) {
       vx_ *= -1;
-    } else if (x_ > GameView.SCREEN_WIDTH - radius_) {
+    } else if (x_ > Util.SCREEN_WIDTH - radius_) {
       vx_ *= -1;
     }
   }
@@ -114,8 +112,8 @@ public class Ball {
   }
 
   public void reset() {
-    x_ = GameView.SCREEN_WIDTH / 2;
-    y_ = GameView.SCREEN_HEIGHT / 2;
+    x_ = Util.SCREEN_WIDTH / 2;
+    y_ = Util.SCREEN_HEIGHT / 2;
     vx_ = 0;
     vy_ = 0;
   }

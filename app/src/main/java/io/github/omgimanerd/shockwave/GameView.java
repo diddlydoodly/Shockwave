@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import io.github.omgimanerd.shockwave.game.Game;
+import io.github.omgimanerd.shockwave.game.Shockwave;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -17,44 +18,27 @@ import static java.lang.System.currentTimeMillis;
 public class GameView extends View {
 
   private static final int FPS = 80;
-  public static float SCREEN_WIDTH;
-  public static float SCREEN_HEIGHT;
 
-  private static final int MENU_MODE = 0;
-  private static final int GAME_MODE = 1;
-  private static final int RESULT_MODE = 2;
-
+  private ShockwaveView parentView_;
   private long lastUpdateTime_;
-  public int mode_;
 
   public Game game_;
 
-  public GameView(Context context) {
+  public GameView(Context context, ShockwaveView parentView) {
     super(context);
 
-    SCREEN_WIDTH = getResources().getDisplayMetrics().widthPixels;
-    SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels;
-
+    parentView_ = parentView;
     lastUpdateTime_ = currentTimeMillis();
-    mode_ = MENU_MODE;
     game_ = new Game();
   }
 
   public void onDraw(Canvas canvas) {
-    switch (mode_) {
-      case MENU_MODE:
-        break;
-      case GAME_MODE:
-        if (currentTimeMillis() - lastUpdateTime_ >= 1000 / FPS) {
-          game_.update();
-          game_.render(canvas);
-        }
-        if (game_.getWinner() != 0) {
-          mode_ = RESULT_MODE;
-        }
-        break;
-      case RESULT_MODE:
-        break;
+    if (currentTimeMillis() - lastUpdateTime_ >= 1000 / FPS) {
+      game_.update();
+      game_.render(canvas);
+    }
+    if (game_.getWinner() != 0) {
+      parentView_.showNext();
     }
     invalidate();
   }
@@ -62,19 +46,8 @@ public class GameView extends View {
   public boolean onTouchEvent(MotionEvent event) {
     int action = event.getAction();
 
-    switch (mode_) {
-      case MENU_MODE:
-        mode_ = GAME_MODE;
-        break;
-      case GAME_MODE:
-        if (action == MotionEvent.ACTION_DOWN) {
-          game_.createShockWave(event.getX(), event.getY());
-        }
-        break;
-      case RESULT_MODE:
-        game_.reset();
-        mode_ = GAME_MODE;
-        break;
+    if (action == MotionEvent.ACTION_DOWN) {
+      game_.createShockWave(event.getX(), event.getY());
     }
     return true;
   }

@@ -4,11 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
-
-import io.github.omgimanerd.shockwave.GameView;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -73,22 +70,22 @@ public class Game {
   }
 
   public void render(Canvas canvas) {
-    canvas.drawRect(0, 0, GameView.SCREEN_WIDTH, GameView.SCREEN_HEIGHT,
+    canvas.drawRect(0, 0, Util.SCREEN_WIDTH, Util.SCREEN_HEIGHT,
                     borderPaint_);
     canvas.drawRect(GAME_BORDER, 0,
-                    GameView.SCREEN_WIDTH - GAME_BORDER,
-                    GameView.SCREEN_HEIGHT / 2, blueZonePaint_);
+                    Util.SCREEN_WIDTH - GAME_BORDER,
+                    Util.SCREEN_HEIGHT / 2, blueZonePaint_);
     canvas.drawRect(GAME_BORDER, 0,
-                    GameView.SCREEN_WIDTH - GAME_BORDER,
+                    Util.SCREEN_WIDTH - GAME_BORDER,
                     GOAL_HEIGHT, blueGoalZonePaint_);
     canvas.drawRect(GAME_BORDER,
-                    GameView.SCREEN_HEIGHT / 2,
-                    GameView.SCREEN_WIDTH - GAME_BORDER,
-                    GameView.SCREEN_HEIGHT, redZonePaint_);
+                    Util.SCREEN_HEIGHT / 2,
+                    Util.SCREEN_WIDTH - GAME_BORDER,
+                    Util.SCREEN_HEIGHT, redZonePaint_);
     canvas.drawRect(GAME_BORDER,
-                    GameView.SCREEN_HEIGHT - GOAL_HEIGHT,
-                    GameView.SCREEN_WIDTH - GAME_BORDER,
-                    GameView.SCREEN_HEIGHT, redGoalZonePaint_);
+                    Util.SCREEN_HEIGHT - GOAL_HEIGHT,
+                    Util.SCREEN_WIDTH - GAME_BORDER,
+                    Util.SCREEN_HEIGHT, redGoalZonePaint_);
 
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).render(canvas);
@@ -106,13 +103,13 @@ public class Game {
   private boolean isValidShockwavePoint(float x, float y) {
     Rect validBlueArea;
     validBlueArea = new Rect(0, 0,
-                             (int) GameView.SCREEN_WIDTH,
-                             (int) GameView.SCREEN_HEIGHT / 2);
+                             (int) Util.SCREEN_WIDTH,
+                             (int) Util.SCREEN_HEIGHT / 2);
     Rect validRedArea;
     validRedArea = new Rect(0,
-                            (int) GameView.SCREEN_HEIGHT / 2,
-                            (int) GameView.SCREEN_WIDTH,
-                            (int) GameView.SCREEN_HEIGHT);
+                            (int) Util.SCREEN_HEIGHT / 2,
+                            (int) Util.SCREEN_WIDTH,
+                            (int) Util.SCREEN_HEIGHT);
     if (canBlueTap_ && validBlueArea.contains((int) x, (int) y)) {
       canBlueTap_ = false;
       canRedTap_ = true;
@@ -147,7 +144,7 @@ public class Game {
   public int getWinner() {
     if (ball_.getY() <= 0) {
       return 2;
-    } else if (ball_.getY() >= GameView.SCREEN_HEIGHT) {
+    } else if (ball_.getY() >= Util.SCREEN_HEIGHT) {
       return 1;
     }
     return 0;
