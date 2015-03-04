@@ -7,9 +7,6 @@ import io.github.omgimanerd.shockwave.game.Util;
 
 public class ShockwaveActivity extends Activity {
 
-  public static float SCREEN_WIDTH;
-  public static float SCREEN_HEIGHT;
-
   private ShockwaveView shockwaveView_;
 
   @Override

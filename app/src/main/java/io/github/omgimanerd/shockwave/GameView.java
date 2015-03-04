@@ -2,6 +2,7 @@ package io.github.omgimanerd.shockwave;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -33,12 +34,14 @@ public class GameView extends View {
   }
 
   public void onDraw(Canvas canvas) {
+    Log.d("running", "test");
     if (currentTimeMillis() - lastUpdateTime_ >= 1000 / FPS) {
       game_.update();
       game_.render(canvas);
     }
     if (game_.getWinner() != 0) {
       parentView_.showNext();
+      game_.reset();
     }
     invalidate();
   }
