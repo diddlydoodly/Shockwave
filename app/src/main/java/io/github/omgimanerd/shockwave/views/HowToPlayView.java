@@ -1,4 +1,4 @@
-package io.github.omgimanerd.shockwave;
+package io.github.omgimanerd.shockwave.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,25 +7,38 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import io.github.omgimanerd.shockwave.R;
+import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
 import io.github.omgimanerd.shockwave.game.Ball;
 import io.github.omgimanerd.shockwave.game.Shockwave;
-import io.github.omgimanerd.shockwave.game.Util;
+import io.github.omgimanerd.shockwave.util.PseudoButton;
+import io.github.omgimanerd.shockwave.util.Util;
 
 /**
  * Created by omgimanerd on 2/27/15.
  */
 public class HowToPlayView extends View {
 
-  private ShockwaveView parentView_;
+  public static int VIEW_ANIMATOR_INDEX;
+
+  private ShockwaveViewAnimator viewAnimator_;
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
+  private PseudoButton backButton_;
 
-  public HowToPlayView(Context context, ShockwaveView parentView) {
+  public HowToPlayView(Context context, ShockwaveViewAnimator viewAnimator) {
     super(context);
 
-    parentView_ = parentView;
+    viewAnimator_ = viewAnimator;
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
+
+    backButton_ = new PseudoButton(
+        PseudoButton.BUTTON_MARGIN,
+        Util.SCREEN_HEIGHT / 4,
+        Util.SCREEN_WIDTH - PseudoButton.BUTTON_MARGIN,
+        Util.SCREEN_HEIGHT / 4 + PseudoButton.BUTTON_HEIGHT);
+    backButton_.setButtonText(getResources().getString(R.string.back));
   }
 
   public void onDraw(Canvas canvas) {
@@ -36,7 +49,11 @@ public class HowToPlayView extends View {
         i--;
       }
     }
+    for (int i = 0; i < shockwaves_.size(); ++i) {
+      shockwaves_.get(i).render(canvas);
+    }
     ball_.update(shockwaves_);
+    ball_.render(canvas);
 
     // During instructions, the ball will bounce off what is supposed to be
     // the goal zone wall.
@@ -45,11 +62,16 @@ public class HowToPlayView extends View {
     } else if (ball_.getY() > Util.SCREEN_HEIGHT - ball_.getRadius()) {
       ball_.setVy(-Math.abs(ball_.getVy()));
     }
+
+    backButton_.render(canvas);
   }
 
   public boolean onTouchEvent(MotionEvent event) {
     int action = event.getAction();
     if (action == MotionEvent.ACTION_DOWN) {
+      if (backButton_.contains(event.getX(), event.getY())) {
+        viewAnimator_.setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
+      }
       shockwaves_.add(new Shockwave(event.getX(), event.getY()));
     }
     return true;

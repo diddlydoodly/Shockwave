@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import io.github.omgimanerd.shockwave.util.Util;
+
 import static java.lang.System.currentTimeMillis;
 
 /**

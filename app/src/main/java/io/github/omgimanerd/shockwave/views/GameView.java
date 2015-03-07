@@ -1,13 +1,12 @@
-package io.github.omgimanerd.shockwave;
+package io.github.omgimanerd.shockwave.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
 import io.github.omgimanerd.shockwave.game.Game;
-import io.github.omgimanerd.shockwave.game.Shockwave;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -18,14 +17,16 @@ import static java.lang.System.currentTimeMillis;
  */
 public class GameView extends View {
 
+  public static int VIEW_ANIMATOR_INDEX;
   private static final int FPS = 80;
+  private static final int MAX_SCORE = 10;
 
-  private ShockwaveView parentView_;
+  private ShockwaveViewAnimator parentView_;
   private long lastUpdateTime_;
 
   public Game game_;
 
-  public GameView(Context context, ShockwaveView parentView) {
+  public GameView(Context context, ShockwaveViewAnimator parentView) {
     super(context);
 
     parentView_ = parentView;
@@ -34,14 +35,13 @@ public class GameView extends View {
   }
 
   public void onDraw(Canvas canvas) {
-    Log.d("running", "test");
     if (currentTimeMillis() - lastUpdateTime_ >= 1000 / FPS) {
       game_.update();
       game_.render(canvas);
     }
-    if (game_.getWinner() != 0) {
-      parentView_.showNext();
-      game_.reset();
+    if (game_.getBlueScore() >= 10 || game_.getRedScore() >= 10) {
+      parentView_.setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
+      game_.hardreset();
     }
     invalidate();
   }
