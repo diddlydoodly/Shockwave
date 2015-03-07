@@ -3,7 +3,8 @@ package io.github.omgimanerd.shockwave.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.RectF;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -28,31 +29,50 @@ public class Game {
 
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
+
   private int blueScore_;
   private int redScore_;
+
   private boolean canBlueTap_;
   private long lastBlueTapTime_;
   private boolean canRedTap_;
   private long lastRedTapTime_;
 
+  private RectF blueZone_;
+  private RectF redZone_;
+
   private Paint borderPaint_;
+  private Paint scoreTextPaint_;
+
   private Paint blueZonePaint_;
   private Paint blueGoalZonePaint_;
   private Paint redZonePaint_;
   private Paint redGoalZonePaint_;
 
-  private Paint scoreTextPaint_;
-
   public Game() {
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
+
     blueScore_ = 0;
     redScore_ = 0;
     canRedTap_ = true;
     canBlueTap_ = true;
 
+    blueZone_ = new RectF(GAME_BORDER,
+                          0,
+                          Util.SCREEN_WIDTH - GAME_BORDER,
+                          Util.SCREEN_HEIGHT / 2);
+    redZone_ = new RectF(GAME_BORDER,
+                         Util.SCREEN_HEIGHT / 2,
+                         Util.SCREEN_WIDTH - GAME_BORDER,
+                         Util.SCREEN_HEIGHT);
+
     borderPaint_ = new Paint();
     borderPaint_.setColor(BORDER_COLOR);
+    scoreTextPaint_ = new Paint();
+    scoreTextPaint_.setColor(TEXT_COLOR);
+    scoreTextPaint_.setTextAlign(Paint.Align.CENTER);
+    scoreTextPaint_.setTextSize(Util.SCREEN_WIDTH / 10);
 
     blueZonePaint_ = new Paint();
     blueZonePaint_.setColor(BLUE_ZONE_COLOR);
@@ -65,11 +85,6 @@ public class Game {
 
     redGoalZonePaint_ = new Paint();
     redGoalZonePaint_.setColor(RED_GOAL_ZONE_COLOR);
-
-    scoreTextPaint_ = new Paint();
-    scoreTextPaint_.setColor(TEXT_COLOR);
-    scoreTextPaint_.setTextAlign(Paint.Align.CENTER);
-    scoreTextPaint_.setTextSize(Util.SCREEN_WIDTH / 10);
   }
 
   public void update() {
@@ -84,38 +99,26 @@ public class Game {
 
     if (getWinner() == 1) {
       redScore_++;
-      softreset();
+      softReset();
     } else if (getWinner() == 2) {
       blueScore_++;
-      softreset();
+      softReset();
     }
   }
 
   public void render(Canvas canvas) {
     canvas.drawRect(0, 0, Util.SCREEN_WIDTH, Util.SCREEN_HEIGHT,
                     borderPaint_);
-    canvas.drawRect(GAME_BORDER,
-                    0,
-                    Util.SCREEN_WIDTH - GAME_BORDER,
-                    Util.SCREEN_HEIGHT / 2,
-                    blueZonePaint_);
+
+    // Render the blue zone, goal area, and score.
+    canvas.drawRect(blueZone_, blueZonePaint_);
     canvas.drawRect(GAME_BORDER,
                     0,
                     Util.SCREEN_WIDTH - GAME_BORDER,
                     GOAL_HEIGHT,
                     blueGoalZonePaint_);
-    canvas.drawRect(GAME_BORDER,
-                    Util.SCREEN_HEIGHT / 2,
-                    Util.SCREEN_WIDTH - GAME_BORDER,
-                    Util.SCREEN_HEIGHT, redZonePaint_);
-    canvas.drawRect(GAME_BORDER,
-                    Util.SCREEN_HEIGHT - GOAL_HEIGHT,
-                    Util.SCREEN_WIDTH - GAME_BORDER,
-                    Util.SCREEN_HEIGHT, redGoalZonePaint_);
-    canvas.drawText(redScore_ + "", Util.SCREEN_WIDTH / 2,
-                    Util.SCREEN_HEIGHT - GOAL_HEIGHT -
-                        scoreTextPaint_.getTextSize(),
-                    scoreTextPaint_);
+    // We draw the blue score upside down so that the blue can read it from
+    // their perspective.
     canvas.save();
     canvas.rotate(180, Util.SCREEN_WIDTH / 2,
                   GOAL_HEIGHT + scoreTextPaint_.getTextSize());
@@ -124,11 +127,24 @@ public class Game {
                     scoreTextPaint_);
     canvas.restore();
 
+    // Render the red zone, goal area, and score.
+    canvas.drawRect(redZone_, redZonePaint_);
+    canvas.drawRect(GAME_BORDER,
+                    Util.SCREEN_HEIGHT - GOAL_HEIGHT,
+                    Util.SCREEN_WIDTH - GAME_BORDER,
+                    Util.SCREEN_HEIGHT, redGoalZonePaint_);
+    canvas.drawText(redScore_ + "", Util.SCREEN_WIDTH / 2,
+                    Util.SCREEN_HEIGHT - GOAL_HEIGHT -
+                        scoreTextPaint_.getTextSize(),
+                    scoreTextPaint_);
+
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).render(canvas);
     }
     ball_.render(canvas);
 
+    // Updates the state of whether or not each player can tap depending on
+    // the tap timer.
     if (currentTimeMillis() > lastBlueTapTime_ + MIN_TAP_INTERVAL) {
       canBlueTap_ = true;
     }
@@ -137,22 +153,19 @@ public class Game {
     }
   }
 
+  public void onTouchEvent(MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+      createShockWave(event.getX(), event.getY());
+    }
+  }
+
   public void createShockWave(float x, float y) {
-    Rect validBlueArea;
-    validBlueArea = new Rect(0, 0,
-                             (int) Util.SCREEN_WIDTH,
-                             (int) Util.SCREEN_HEIGHT / 2);
-    Rect validRedArea;
-    validRedArea = new Rect(0,
-                            (int) Util.SCREEN_HEIGHT / 2,
-                            (int) Util.SCREEN_WIDTH,
-                            (int) Util.SCREEN_HEIGHT);
-    if (canBlueTap_ && validBlueArea.contains((int) x, (int) y)) {
+    if (canBlueTap_ && blueZone_.contains((int) x, (int) y)) {
       canBlueTap_ = false;
       canRedTap_ = true;
       lastBlueTapTime_ = currentTimeMillis();
       shockwaves_.add(new Shockwave(x, y));
-    } else if (canRedTap_ && validRedArea.contains((int) x, (int) y)) {
+    } else if (canRedTap_ && redZone_.contains((int) x, (int) y)) {
       canBlueTap_ = true;
       canRedTap_ = false;
       lastRedTapTime_ = currentTimeMillis();
@@ -161,14 +174,14 @@ public class Game {
     return;
   }
 
-  public void softreset() {
+  public void softReset() {
     canRedTap_ = true;
     canBlueTap_ = true;
     ball_.reset();
   }
 
-  public void hardreset() {
-    softreset();
+  public void hardReset() {
+    softReset();
     blueScore_ = 0;
     redScore_ = 0;
   }

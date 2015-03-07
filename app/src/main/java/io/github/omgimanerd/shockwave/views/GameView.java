@@ -39,9 +39,17 @@ public class GameView extends View {
       game_.update();
       game_.render(canvas);
     }
-    if (game_.getBlueScore() >= 10 || game_.getRedScore() >= 10) {
+
+    int blueScore = game_.getBlueScore();
+    int redScore = game_.getRedScore();
+    if (blueScore >= 10 || redScore >= 10) {
       parentView_.setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
-      game_.hardreset();
+      if (blueScore >= 10) {
+        parentView_.getEndgameView().setWinner(0);
+      } else {
+        parentView_.getEndgameView().setWinner(1);
+      }
+      game_.hardReset();
     }
     invalidate();
   }
@@ -49,9 +57,8 @@ public class GameView extends View {
   public boolean onTouchEvent(MotionEvent event) {
     int action = event.getAction();
 
-    if (action == MotionEvent.ACTION_DOWN) {
-      game_.createShockWave(event.getX(), event.getY());
-    }
-    return true;
+    game_.onTouchEvent(event);
+
+    return super.onTouchEvent(event);
   }
 }

@@ -33,10 +33,9 @@ public class MenuView extends View {
 
     howToPlayButton_ = new PseudoButton(
         PseudoButton.BUTTON_MARGIN,
-        startButton_.getBottom() + PseudoButton.BUTTON_MARGIN,
+        Util.SCREEN_HEIGHT / 2,
         Util.SCREEN_WIDTH - PseudoButton.BUTTON_MARGIN,
-        startButton_.getBottom() + PseudoButton.BUTTON_MARGIN + PseudoButton
-            .BUTTON_HEIGHT);
+        Util.SCREEN_HEIGHT / 2 + PseudoButton.BUTTON_HEIGHT);
     howToPlayButton_.setButtonColor(PseudoButton.BUTTON_COLOR);
     howToPlayButton_.setButtonText(getResources().getString(R.string.how_to_play));
   }
@@ -63,7 +62,7 @@ public class MenuView extends View {
       }
     }
 
-    return true;
+    return super.onTouchEvent(event);
   }
 
 }

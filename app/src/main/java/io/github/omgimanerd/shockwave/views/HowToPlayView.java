@@ -74,7 +74,8 @@ public class HowToPlayView extends View {
       }
       shockwaves_.add(new Shockwave(event.getX(), event.getY()));
     }
-    return true;
+
+    return super.onTouchEvent(event);
   }
 
 }

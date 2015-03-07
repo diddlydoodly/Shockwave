@@ -50,4 +50,20 @@ public class ShockwaveViewAnimator extends ViewAnimator {
 
     setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
   }
+
+  public EndgameView getEndgameView() {
+    return endgameView_;
+  }
+
+  public GameView getGameView() {
+    return gameView_;
+  }
+
+  public HowToPlayView getHowToPlayView() {
+    return howToPlayView_;
+  }
+
+  public MenuView getMenuView() {
+    return menuView_;
+  }
 }
