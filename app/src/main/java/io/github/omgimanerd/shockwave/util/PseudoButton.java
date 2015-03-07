@@ -16,6 +16,11 @@ public class PseudoButton {
   public static final int BUTTON_MARGIN = 25;
   public static final int BUTTON_HEIGHT = 75;
 
+  private static final float SHADOW_RADIUS = 20;
+  private static final float SHADOW_DX = 10;
+  private static final float SHADOW_DY = 10;
+  private static final int SHADOW_COLOR = Color.parseColor("#808080");
+
   private RectF button_;
   private float r_;
   private Paint buttonPaint_;
@@ -41,6 +46,8 @@ public class PseudoButton {
     r_ = r;
     buttonPaint_ = new Paint();
     buttonPaint_.setColor(BUTTON_COLOR);
+    buttonPaint_.setShadowLayer(SHADOW_RADIUS, SHADOW_DX, SHADOW_DY,
+                                SHADOW_COLOR);
     buttonTextPaint_ = new Paint();
     buttonTextPaint_.setTextSize(Util.TEXT_SIZE);
     buttonTextPaint_.setTextAlign(Paint.Align.CENTER);

@@ -2,6 +2,7 @@ package io.github.omgimanerd.shockwave.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,6 +25,8 @@ public class HowToPlayView extends View {
   private ShockwaveViewAnimator viewAnimator_;
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
+
+  private Paint instructionsPaint_;
   private PseudoButton backButton_;
 
   public HowToPlayView(Context context, ShockwaveViewAnimator viewAnimator) {
@@ -33,11 +36,15 @@ public class HowToPlayView extends View {
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
 
+    instructionsPaint_ = new Paint();
+    instructionsPaint_.setColor(Util.TEXT_COLOR);
+    instructionsPaint_.setTextAlign(Paint.Align.CENTER);
+
     backButton_ = new PseudoButton(
         PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT / 4,
+        Util.SCREEN_HEIGHT * 3 / 4,
         Util.SCREEN_WIDTH - PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT / 4 + PseudoButton.BUTTON_HEIGHT);
+        Util.SCREEN_HEIGHT * 3 / 4 + PseudoButton.BUTTON_HEIGHT);
     backButton_.setButtonText(getResources().getString(R.string.back));
   }
 

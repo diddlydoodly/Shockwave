@@ -19,7 +19,6 @@ public class Game {
 
   public static final int GAME_BORDER = 10;
   private static final int BORDER_COLOR = Color.parseColor("#CCCCCC");
-  private static final int TEXT_COLOR = Color.parseColor("#CCCCCC");
   private static final int BLUE_ZONE_COLOR = Color.parseColor("#1976D2");
   private static final int BLUE_GOAL_ZONE_COLOR = Color.BLUE;
   private static final int RED_ZONE_COLOR = Color.parseColor("#D32F2F");
@@ -70,7 +69,7 @@ public class Game {
     borderPaint_ = new Paint();
     borderPaint_.setColor(BORDER_COLOR);
     scoreTextPaint_ = new Paint();
-    scoreTextPaint_.setColor(TEXT_COLOR);
+    scoreTextPaint_.setColor(Util.TEXT_COLOR);
     scoreTextPaint_.setTextAlign(Paint.Align.CENTER);
     scoreTextPaint_.setTextSize(Util.SCREEN_WIDTH / 10);
 

@@ -1,6 +1,7 @@
 package io.github.omgimanerd.shockwave;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import io.github.omgimanerd.shockwave.util.Util;
@@ -17,6 +18,7 @@ public class ShockwaveActivity extends Activity {
     Util.SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels -
         getResources().getDimensionPixelSize(R.dimen.margin_bottom);
     Util.TEXT_SIZE = getResources().getDimensionPixelSize(R.dimen.text_size);
+    Util.TEXT_COLOR = Color.parseColor("#CCCCCC");
 
     shockwaveViewAnimator_ = new ShockwaveViewAnimator(this);
     setContentView(shockwaveViewAnimator_);
