@@ -46,12 +46,14 @@ public class EndgameView extends View {
         Util.SCREEN_HEIGHT / 2 + PseudoButton.BUTTON_HEIGHT);
     mainMenuButton_.setButtonColor(PseudoButton.BUTTON_COLOR);
     mainMenuButton_.setButtonText(getResources().getString(R.string.main_menu));
+
+    textPaintText_ = "";
   }
 
   public void onDraw(Canvas canvas) {
     canvas.drawRect(background_, backgroundPaint_);
     canvas.drawText(textPaintText_,
-                    Util.SCREEN_WIDTH,
+                    Util.SCREEN_WIDTH / 2,
                     Util.SCREEN_HEIGHT / 4,
                     textPaint_);
 

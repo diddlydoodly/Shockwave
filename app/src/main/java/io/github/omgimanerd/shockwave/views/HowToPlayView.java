@@ -42,13 +42,15 @@ public class HowToPlayView extends View {
 
     backButton_ = new PseudoButton(
         PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT * 3 / 4,
+        Util.SCREEN_HEIGHT - PseudoButton.BUTTON_MARGIN - PseudoButton
+        .BUTTON_HEIGHT,
         Util.SCREEN_WIDTH - PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT * 3 / 4 + PseudoButton.BUTTON_HEIGHT);
+        Util.SCREEN_HEIGHT - PseudoButton.BUTTON_MARGIN);
     backButton_.setButtonText(getResources().getString(R.string.back));
   }
 
   public void onDraw(Canvas canvas) {
+    // TODO: render instructions in non-overflow manner
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).update();
       if (shockwaves_.get(i).isExpired()) {
