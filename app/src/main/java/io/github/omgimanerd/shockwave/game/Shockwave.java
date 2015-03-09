@@ -3,6 +3,7 @@ package io.github.omgimanerd.shockwave.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import io.github.omgimanerd.shockwave.util.Util;
 
@@ -28,6 +29,7 @@ public class Shockwave {
   public Shockwave(float x, float y) {
     x_ = x;
     y_ = y;
+    radius_ = 0;
     maxRadius_ = Util.SCREEN_WIDTH / 5;
     generationTime_ = currentTimeMillis();
     percentDone_ = 0;

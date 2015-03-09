@@ -3,10 +3,12 @@ package io.github.omgimanerd.shockwave.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.github.omgimanerd.shockwave.R;
 import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
@@ -50,7 +52,6 @@ public class HowToPlayView extends View {
   }
 
   public void onDraw(Canvas canvas) {
-    // TODO: render instructions in non-overflow manner
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).update();
       if (shockwaves_.get(i).isExpired()) {
@@ -61,6 +62,7 @@ public class HowToPlayView extends View {
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).render(canvas);
     }
+
     ball_.update(shockwaves_);
     ball_.render(canvas);
 
@@ -73,18 +75,22 @@ public class HowToPlayView extends View {
     }
 
     backButton_.render(canvas);
+
+    invalidate();
   }
 
   public boolean onTouchEvent(MotionEvent event) {
     int action = event.getAction();
+
     if (action == MotionEvent.ACTION_DOWN) {
       if (backButton_.contains(event.getX(), event.getY())) {
+        shockwaves_.clear();
         viewAnimator_.setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
+      } else {
+        shockwaves_.add(new Shockwave(event.getX(), event.getY()));
       }
-      shockwaves_.add(new Shockwave(event.getX(), event.getY()));
     }
 
     return super.onTouchEvent(event);
   }
-
 }
