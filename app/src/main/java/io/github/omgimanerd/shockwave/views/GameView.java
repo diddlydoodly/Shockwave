@@ -45,18 +45,16 @@ public class GameView extends View {
     if (blueScore >= 10 || redScore >= 10) {
       parentView_.setDisplayedChild(EndgameView.VIEW_ANIMATOR_INDEX);
       if (blueScore >= 10) {
-        parentView_.getEndgameView().setWinner(0);
-      } else if (redScore >= 10) {
         parentView_.getEndgameView().setWinner(1);
+      } else if (redScore >= 10) {
+        parentView_.getEndgameView().setWinner(2);
       }
-      game_.hardReset();
+      game_.reset();
     }
     invalidate();
   }
 
   public boolean onTouchEvent(MotionEvent event) {
-    int action = event.getAction();
-
     game_.onTouchEvent(event);
 
     return super.onTouchEvent(event);

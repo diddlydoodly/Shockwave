@@ -77,12 +77,14 @@ public class EndgameView extends View {
    * @param winner
    */
   public void setWinner(int winner) {
-    if (winner == 0) {
+    if (winner == 2) {
       backgroundPaint_.setColor(Color.BLUE);
       textPaintText_ = getResources().getString(R.string.blue_wins);
-    } else {
+    } else if (winner == 1) {
       backgroundPaint_.setColor(Color.RED);
       textPaintText_ = getResources().getString(R.string.red_wins);
+    } else {
+      throw new Error("Something went wrong...");
     }
   }
 }

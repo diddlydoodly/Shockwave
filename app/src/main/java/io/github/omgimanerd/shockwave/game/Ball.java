@@ -119,4 +119,14 @@ public class Ball {
     vx_ = 0;
     vy_ = 0;
   }
+
+  public void resetRed() {
+    reset();
+    y_ = Util.SCREEN_HEIGHT * 3 / 4;
+  }
+
+  public void resetBlue() {
+    reset();
+    y_ = Util.SCREEN_HEIGHT / 4;
+  }
 }

@@ -97,11 +97,15 @@ public class Game {
     ball_.update(shockwaves_);
 
     if (getWinner() == 1) {
+      canBlueTap_ = true;
+      canRedTap_ = true;
       redScore_++;
-      softReset();
+      ball_.resetRed();
     } else if (getWinner() == 2) {
+      canBlueTap_ = true;
+      canRedTap_ = true;
       blueScore_++;
-      softReset();
+      ball_.resetBlue();
     }
   }
 
@@ -173,28 +177,24 @@ public class Game {
     return;
   }
 
-  public void softReset() {
+  public void reset() {
     canRedTap_ = true;
     canBlueTap_ = true;
     ball_.reset();
-  }
-
-  public void hardReset() {
-    softReset();
     blueScore_ = 0;
     redScore_ = 0;
   }
 
   /**
-   * Returns 1 if red won, returns 2 if blue won, returns 0 if no one has
+   * Returns 1 if blue won, returns 2 if red won, returns 0 if no one has
    * won yet.
    * @return
    */
   public int getWinner() {
     if (ball_.getY() <= 0) {
-      return 1;
-    } else if (ball_.getY() >= Util.SCREEN_HEIGHT) {
       return 2;
+    } else if (ball_.getY() >= Util.SCREEN_HEIGHT) {
+      return 1;
     }
     return 0;
   }
