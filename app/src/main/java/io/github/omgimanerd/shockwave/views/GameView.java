@@ -45,9 +45,9 @@ public class GameView extends View {
     if (blueScore >= 10 || redScore >= 10) {
       parentView_.setDisplayedChild(EndgameView.VIEW_ANIMATOR_INDEX);
       if (blueScore >= 10) {
-        parentView_.getEndgameView().setWinner(1);
+        parentView_.getEndgameView().setWinner(Game.WINNER_BLUE);
       } else if (redScore >= 10) {
-        parentView_.getEndgameView().setWinner(2);
+        parentView_.getEndgameView().setWinner(Game.WINNER_RED);
       }
       game_.reset();
     }

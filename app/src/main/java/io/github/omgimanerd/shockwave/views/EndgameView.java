@@ -10,6 +10,7 @@ import android.view.View;
 
 import io.github.omgimanerd.shockwave.R;
 import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
+import io.github.omgimanerd.shockwave.game.Game;
 import io.github.omgimanerd.shockwave.util.PseudoButton;
 import io.github.omgimanerd.shockwave.util.Util;
 
@@ -77,14 +78,14 @@ public class EndgameView extends View {
    * @param winner
    */
   public void setWinner(int winner) {
-    if (winner == 2) {
+    if (winner == Game.WINNER_BLUE) {
       backgroundPaint_.setColor(Color.BLUE);
       textPaintText_ = getResources().getString(R.string.blue_wins);
-    } else if (winner == 1) {
+    } else if (winner == Game.WINNER_RED) {
       backgroundPaint_.setColor(Color.RED);
       textPaintText_ = getResources().getString(R.string.red_wins);
     } else {
-      throw new Error("Something went wrong...");
+      throw new Error(getResources().getString(R.string.error_msg));
     }
   }
 }

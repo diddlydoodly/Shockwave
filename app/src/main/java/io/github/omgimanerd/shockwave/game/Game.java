@@ -18,6 +18,8 @@ import static java.lang.System.currentTimeMillis;
 public class Game {
 
   public static final int GAME_BORDER = 10;
+  public static final int WINNER_BLUE = 1;
+  public static final int WINNER_RED = 2;
   private static final int BORDER_COLOR = Color.parseColor("#CCCCCC");
   private static final int BLUE_ZONE_COLOR = Color.parseColor("#1976D2");
   private static final int BLUE_GOAL_ZONE_COLOR = Color.BLUE;
@@ -96,16 +98,16 @@ public class Game {
     }
     ball_.update(shockwaves_);
 
-    if (getWinner() == 1) {
+    if (getWinner() == WINNER_RED) {
       canBlueTap_ = true;
       canRedTap_ = true;
       redScore_++;
-      ball_.resetRed();
-    } else if (getWinner() == 2) {
+      ball_.resetBlue();
+    } else if (getWinner() == WINNER_BLUE) {
       canBlueTap_ = true;
       canRedTap_ = true;
       blueScore_++;
-      ball_.resetBlue();
+      ball_.resetRed();
     }
   }
 
@@ -186,15 +188,16 @@ public class Game {
   }
 
   /**
-   * Returns 1 if blue won, returns 2 if red won, returns 0 if no one has
+   * Returns WINNER_BLUE if blue won, returns WINNER_RED if red won,
+   * returns 0 if no one has
    * won yet.
    * @return
    */
   public int getWinner() {
     if (ball_.getY() <= 0) {
-      return 2;
+      return WINNER_RED;
     } else if (ball_.getY() >= Util.SCREEN_HEIGHT) {
-      return 1;
+      return WINNER_BLUE;
     }
     return 0;
   }
