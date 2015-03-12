@@ -42,11 +42,11 @@ public class GameView extends View {
 
     int blueScore = game_.getBlueScore();
     int redScore = game_.getRedScore();
-    if (blueScore >= 10 || redScore >= 10) {
+    if (blueScore >= MAX_SCORE || redScore >= MAX_SCORE) {
       parentView_.setDisplayedChild(EndgameView.VIEW_ANIMATOR_INDEX);
-      if (blueScore >= 10) {
+      if (blueScore >= MAX_SCORE) {
         parentView_.getEndgameView().setWinner(Game.WINNER_BLUE);
-      } else if (redScore >= 10) {
+      } else if (redScore >= MAX_SCORE) {
         parentView_.getEndgameView().setWinner(Game.WINNER_RED);
       }
       game_.reset();
