@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,24 +69,5 @@ public class GameActivity extends Activity {
     }
 
     lostOverlay_.setVisibility(View.VISIBLE);
-    /*
-    AlphaAnimation fade_in = new AlphaAnimation(0.0f, 1.0f);
-    fade_in.setDuration(500);
-    fade_in.setAnimationListener(new Animation.AnimationListener() {
-      @Override
-      public void onAnimationStart(Animation animation) {
-
-      }
-
-      @Override
-      public void onAnimationRepeat(Animation animation) {
-
-      }
-
-      @Override
-      public void onAnimationEnd(Animation animation) {
-      }
-    });
-    lostOverlay_.startAnimation(fade_in);*/
   }
 }

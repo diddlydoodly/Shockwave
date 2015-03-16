@@ -12,7 +12,7 @@
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:layout_margin="25dp"
-      android:alpha="200"
+      android:background="@drawable/rounded_button"
       android:id="@+id/lostOverlay">
 
     <TextView
@@ -27,6 +27,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:id="@+id/lostOverlayButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
