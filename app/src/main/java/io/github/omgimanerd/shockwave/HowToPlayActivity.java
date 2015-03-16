@@ -32,6 +32,10 @@ public class HowToPlayActivity extends Activity {
   private void init() {
     backButton_.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_slide_in_bottom,
+                                  R.anim.abc_slide_out_bottom);
         finish();
       }
     });

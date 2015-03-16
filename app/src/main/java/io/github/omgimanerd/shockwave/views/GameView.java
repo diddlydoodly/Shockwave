@@ -19,7 +19,7 @@ import static java.lang.System.currentTimeMillis;
 public class GameView extends View {
 
   private static final int FPS = 80;
-  private static final int MAX_SCORE = 10;
+  private static final int MAX_SCORE = 5;
 
   private long lastUpdateTime_;
 

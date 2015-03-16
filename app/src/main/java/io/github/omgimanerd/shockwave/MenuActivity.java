@@ -28,8 +28,6 @@ public class MenuActivity extends Activity {
 
     Util.SCREEN_WIDTH = getResources().getDisplayMetrics().widthPixels;
     Util.SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels;
-    Util.TEXT_SIZE = getResources().getDimensionPixelSize(R.dimen.text_size);
-    Util.TEXT_COLOR = Color.parseColor("#CCCCCC");
 
     startButton_ = (Button) findViewById(R.id.startButton);
     howToPlayButton_ = (Button) findViewById(R.id.howToPlayButton);
@@ -39,9 +37,11 @@ public class MenuActivity extends Activity {
   private void init() {
     startButton_.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        Intent intent = new Intent(getApplicationContext(),
-                                   GameActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.abc_slide_in_bottom,
+                                  R.anim.abc_slide_out_bottom);
+        finish();
       }
     });
 
@@ -50,6 +50,9 @@ public class MenuActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(),
                                    HowToPlayActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.abc_slide_in_top,
+                                  R.anim.abc_slide_out_top);
+        finish();
       }
     });
   }

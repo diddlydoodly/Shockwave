@@ -22,7 +22,7 @@
         android:textSize="30sp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"/>
+        android:gravity="center"/>
 
     <Button
         android:layout_width="match_parent"

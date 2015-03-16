@@ -1,11 +1,14 @@
 package io.github.omgimanerd.shockwave;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,18 +42,21 @@ public class GameActivity extends Activity {
   }
 
   private void init() {
-    lostOverlay_.setVisibility(View.INVISIBLE);
+    lostOverlay_.setVisibility(View.GONE);
 
     lostOverlayButton_.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        Intent intent = new Intent(getApplicationContext(),
+                                   MenuActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.abc_slide_in_bottom,
+                                  R.anim.abc_slide_in_bottom);
         finish();
       }
     });
   }
 
   public void showLostOverlay(int winner) {
-    lostOverlay_.setVisibility(View.VISIBLE);
-
     if (winner == Game.WINNER_BLUE) {
       lostOverlay_.setBackgroundColor(Color.BLUE);
       lostTextView_.setText(getResources().getString(R.string.blue_wins));
@@ -60,5 +66,26 @@ public class GameActivity extends Activity {
     } else {
       throw new Error(getResources().getString(R.string.error_msg));
     }
+
+    lostOverlay_.setVisibility(View.VISIBLE);
+    /*
+    AlphaAnimation fade_in = new AlphaAnimation(0.0f, 1.0f);
+    fade_in.setDuration(500);
+    fade_in.setAnimationListener(new Animation.AnimationListener() {
+      @Override
+      public void onAnimationStart(Animation animation) {
+
+      }
+
+      @Override
+      public void onAnimationRepeat(Animation animation) {
+
+      }
+
+      @Override
+      public void onAnimationEnd(Animation animation) {
+      }
+    });
+    lostOverlay_.startAnimation(fade_in);*/
   }
 }
