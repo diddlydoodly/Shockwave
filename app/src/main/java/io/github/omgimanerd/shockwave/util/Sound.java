@@ -14,6 +14,7 @@ public class Sound {
   private static SoundPool soundPool_;
   private static HashMap sounds_;
 
+  @SuppressWarnings("deprecated")
   public static void loadSounds(Context context) {
     soundPool_ = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
     sounds_ = new HashMap();

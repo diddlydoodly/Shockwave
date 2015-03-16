@@ -194,9 +194,9 @@ public class Game {
    * @return
    */
   public int getWinner() {
-    if (ball_.getY() <= 0) {
+    if (ball_.getY() <= -ball_.getRadius()) {
       return WINNER_RED;
-    } else if (ball_.getY() >= Util.SCREEN_HEIGHT) {
+    } else if (ball_.getY() >= Util.SCREEN_HEIGHT + ball_.getRadius()) {
       return WINNER_BLUE;
     }
     return 0;
