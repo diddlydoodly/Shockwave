@@ -59,10 +59,12 @@ public class GameActivity extends Activity {
 
   public void showLostOverlay(int winner) {
     if (winner == Game.WINNER_BLUE) {
-      lostOverlay_.setBackgroundColor(Color.BLUE);
+      lostOverlay_.setBackground(getResources().getDrawable(
+          R.drawable.rounded_layout_blue));
       lostTextView_.setText(getResources().getString(R.string.blue_wins));
     } else if (winner == Game.WINNER_RED) {
-      lostOverlay_.setBackgroundColor(Color.RED);
+      lostOverlay_.setBackground(getResources().getDrawable(
+          R.drawable.rounded_layout_red));
       lostTextView_.setText(getResources().getString(R.string.red_wins));
     } else {
       throw new Error(getResources().getString(R.string.error_msg));

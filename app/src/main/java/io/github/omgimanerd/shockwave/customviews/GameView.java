@@ -1,4 +1,4 @@
-package io.github.omgimanerd.shockwave.views;
+package io.github.omgimanerd.shockwave.customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -15,14 +15,13 @@
       android:textColor="#AA000000"
       android:padding="20dp"/>
 
-  <io.github.omgimanerd.shockwave.views.HowToPlayView
+  <io.github.omgimanerd.shockwave.customviews.HowToPlayView
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"/>
 
   <Button
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/rounded_button"
       android:text="@string/back"
       android:id="@+id/backButton"
       android:layout_alignParentBottom="true"

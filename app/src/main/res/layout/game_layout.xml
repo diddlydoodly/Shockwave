@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-  <io.github.omgimanerd.shockwave.views.GameView
+  <io.github.omgimanerd.shockwave.customviews.GameView
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"/>
 
@@ -12,7 +12,6 @@
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:layout_margin="25dp"
-      android:background="@drawable/rounded_button"
       android:id="@+id/lostOverlay">
 
     <TextView
@@ -27,12 +26,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
         android:id="@+id/lostOverlayButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/main_menu"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:layout_margin="20sp"/>
   </RelativeLayout>
 
 </RelativeLayout>
