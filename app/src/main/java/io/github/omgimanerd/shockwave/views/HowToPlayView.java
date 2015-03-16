@@ -3,20 +3,14 @@ package io.github.omgimanerd.shockwave.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import io.github.omgimanerd.shockwave.R;
-import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
 import io.github.omgimanerd.shockwave.game.Ball;
 import io.github.omgimanerd.shockwave.game.Shockwave;
-import io.github.omgimanerd.shockwave.util.PseudoButton;
 import io.github.omgimanerd.shockwave.util.Util;
 
 /**
@@ -24,36 +18,23 @@ import io.github.omgimanerd.shockwave.util.Util;
  */
 public class HowToPlayView extends View {
 
-  public static int VIEW_ANIMATOR_INDEX;
-
-  private ShockwaveViewAnimator viewAnimator_;
   private Ball ball_;
   private ArrayList<Shockwave> shockwaves_;
 
   private Paint instructionsPaint_;
-  private PseudoButton backButton_;
 
-  public HowToPlayView(Context context, ShockwaveViewAnimator viewAnimator) {
-    super(context);
+  public HowToPlayView(Context context, AttributeSet attrs) {
+    super(context, attrs);
 
-    viewAnimator_ = viewAnimator;
     ball_ = new Ball();
     shockwaves_ = new ArrayList<>();
 
     instructionsPaint_ = new Paint();
     instructionsPaint_.setColor(Util.TEXT_COLOR);
     instructionsPaint_.setTextAlign(Paint.Align.CENTER);
-
-    backButton_ = new PseudoButton(
-        PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT - PseudoButton.BUTTON_MARGIN - PseudoButton
-        .BUTTON_HEIGHT,
-        Util.SCREEN_WIDTH - PseudoButton.BUTTON_MARGIN,
-        Util.SCREEN_HEIGHT - PseudoButton.BUTTON_MARGIN);
-    backButton_.setButtonText(getResources().getString(R.string.back));
   }
 
-  public void onDraw(Canvas canvas) {
+  synchronized public void onDraw(Canvas canvas) {
     for (int i = 0; i < shockwaves_.size(); ++i) {
       shockwaves_.get(i).update();
       if (shockwaves_.get(i).isExpired()) {
@@ -76,8 +57,6 @@ public class HowToPlayView extends View {
       ball_.setVy(-Math.abs(ball_.getVy()));
     }
 
-    backButton_.render(canvas);
-
     invalidate();
   }
 
@@ -85,12 +64,7 @@ public class HowToPlayView extends View {
     int action = event.getAction();
 
     if (action == MotionEvent.ACTION_DOWN) {
-      if (backButton_.contains(event.getX(), event.getY())) {
-        shockwaves_.clear();
-        viewAnimator_.setDisplayedChild(MenuView.VIEW_ANIMATOR_INDEX);
-      } else {
-        shockwaves_.add(new Shockwave(event.getX(), event.getY()));
-      }
+      shockwaves_.add(new Shockwave(event.getX(), event.getY()));
     }
 
     return super.onTouchEvent(event);

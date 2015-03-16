@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffff4444">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play"
+        android:id="@+id/startButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:width="250dp"
+        android:height="100dp"
+        android:textSize="20sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/how_to_play"
+        android:id="@+id/howToPlayButton"
+        android:layout_below="@+id/startButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:width="200dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/app_name"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp"
+        android:paddingTop="80dp"
+        android:typeface="sans"/>
+</RelativeLayout>

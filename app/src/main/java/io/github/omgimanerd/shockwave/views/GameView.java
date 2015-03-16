@@ -2,10 +2,11 @@ package io.github.omgimanerd.shockwave.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import io.github.omgimanerd.shockwave.ShockwaveViewAnimator;
+import io.github.omgimanerd.shockwave.GameActivity;
 import io.github.omgimanerd.shockwave.game.Game;
 
 import static java.lang.System.currentTimeMillis;
@@ -17,19 +18,16 @@ import static java.lang.System.currentTimeMillis;
  */
 public class GameView extends View {
 
-  public static int VIEW_ANIMATOR_INDEX;
   private static final int FPS = 80;
   private static final int MAX_SCORE = 10;
 
-  private ShockwaveViewAnimator parentView_;
   private long lastUpdateTime_;
 
   public Game game_;
 
-  public GameView(Context context, ShockwaveViewAnimator parentView) {
-    super(context);
+  public GameView(Context context, AttributeSet attrs) {
+    super(context, attrs);
 
-    parentView_ = parentView;
     lastUpdateTime_ = currentTimeMillis();
     game_ = new Game();
   }
@@ -42,21 +40,16 @@ public class GameView extends View {
 
     int blueScore = game_.getBlueScore();
     int redScore = game_.getRedScore();
-    if (blueScore >= MAX_SCORE || redScore >= MAX_SCORE) {
-      parentView_.setDisplayedChild(EndgameView.VIEW_ANIMATOR_INDEX);
-      if (blueScore >= MAX_SCORE) {
-        parentView_.getEndgameView().setWinner(Game.WINNER_BLUE);
-      } else if (redScore >= MAX_SCORE) {
-        parentView_.getEndgameView().setWinner(Game.WINNER_RED);
-      }
-      game_.reset();
+    if (blueScore >= MAX_SCORE) {
+      ((GameActivity) getContext()).showLostOverlay(Game.WINNER_BLUE);
+    } else if (redScore >= MAX_SCORE) {
+      ((GameActivity) getContext()).showLostOverlay(Game.WINNER_RED);
     }
     invalidate();
   }
 
   public boolean onTouchEvent(MotionEvent event) {
     game_.onTouchEvent(event);
-
     return super.onTouchEvent(event);
   }
 }
