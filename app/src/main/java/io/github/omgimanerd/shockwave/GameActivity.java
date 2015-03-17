@@ -51,7 +51,7 @@ public class GameActivity extends Activity {
                                    MenuActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.abc_slide_in_bottom,
-                                  R.anim.abc_slide_in_bottom);
+                                  R.anim.abc_slide_out_top);
         finish();
       }
     });

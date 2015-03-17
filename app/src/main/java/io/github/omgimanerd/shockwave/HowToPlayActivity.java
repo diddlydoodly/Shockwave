@@ -34,8 +34,7 @@ public class HowToPlayActivity extends Activity {
       public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.abc_slide_in_bottom,
-                                  R.anim.abc_slide_out_bottom);
+        overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
         finish();
       }
     });
