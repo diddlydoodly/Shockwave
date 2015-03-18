@@ -8,14 +8,12 @@ import java.util.ArrayList;
 
 import io.github.omgimanerd.shockwave.util.Util;
 
-/**
- * Created by omgimanerd on 2/25/15.
- */
 public class Ball {
 
   private static final float MAX_REFLECT_VELOCITY = 15;
   private static final int BALL_STROKE_COLOR = Color.parseColor("#4C4C4C");
   private static final int BALL_COLOR = Color.parseColor("#B6B6B6");
+  private static final float BALL_RADIUS_RATIO = 0.04f;
 
   private float x_;
   private float y_;
@@ -24,17 +22,44 @@ public class Ball {
   private float radius_;
   private Paint paint_;
 
-  public Ball() {
-    x_ = Util.SCREEN_WIDTH / 2;
-    y_ = Util.SCREEN_HEIGHT / 2;
-    radius_ = Util.SCREEN_WIDTH / 25;
+  // Since the Ball class will be used as a background in the menu and as a
+  // demo in the instructions, this variable keeps track of whether or not
+  // the ball is allowed to travel outside the top and bottom of the screen.
+  private boolean allowToScore_;
 
+  public Ball() {
+    this(Util.SCREEN_WIDTH / 2, Util.SCREEN_HEIGHT / 2);
+  }
+
+  public Ball(float x, float y) {
+    x_ = x;
+    y_ = y;
+    radius_ = Util.SCREEN_WIDTH * BALL_RADIUS_RATIO;
     paint_ = new Paint();
+
+    allowToScore_ = false;
+  }
+
+  public void update() {
+    x_ += vx_;
+    y_ += vy_;
+
+    if (x_ <= radius_) {
+      vx_ = Math.abs(vx_);
+    } else if (x_ > Util.SCREEN_WIDTH - radius_) {
+      vx_ = -Math.abs(vx_);
+    }
+
+    if (!allowToScore_) {
+      if (y_ < radius_) {
+        vy_ = Math.abs(vy_);
+      } else if (y_ > Util.SCREEN_HEIGHT - radius_) {
+        vy_ = -Math.abs(vy_);
+      }
+    }
   }
 
   public void update(ArrayList<Shockwave> shockwaves) {
-    x_ += vx_;
-    y_ += vy_;
     for (int i = 0; i < shockwaves.size(); ++i) {
       Shockwave shockwave = shockwaves.get(i);
       if (hasCollidedWith(shockwave)) {
@@ -46,11 +71,8 @@ public class Ball {
         vy_ = (float) (newVelocity * Math.sin(reflectAngle));
       }
     }
-    if (x_ <= radius_) {
-      vx_ *= -1;
-    } else if (x_ > Util.SCREEN_WIDTH - radius_) {
-      vx_ *= -1;
-    }
+
+    update();
   }
 
   public void render(Canvas canvas) {
@@ -69,10 +91,6 @@ public class Ball {
         radius_ + shockwave.getRadius();
   }
 
-  public float getX() {
-    return x_;
-  }
-
   public float getY() {
     return y_;
   }
@@ -83,41 +101,20 @@ public class Ball {
     };
   }
 
-  public void setX(float x) {
-    x_ = x;
-  }
-
-  public void setY(float y) {
-    y_ = y;
-  }
-
-  public void setXY(float[] xy) {
-    x_ = xy[0];
-    y_ = xy[1];
-  }
-
   public float getRadius() {
     return radius_;
-  }
-
-  public void setRadius(float radius) {
-    radius_ = radius;
-  }
-
-  public float getVy() {
-    return vy_;
   }
 
   public void setVy(float vy) {
     vy_ = vy;
   }
 
-  public float getVx() {
-    return vx_;
-  }
-
   public void setVx(float vx) {
     vx_ = vx;
+  }
+
+  public void setAllowToScore(boolean allowToScore) {
+    allowToScore_ = allowToScore;
   }
 
   public void reset() {

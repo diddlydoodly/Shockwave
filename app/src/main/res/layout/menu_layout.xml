@@ -3,7 +3,11 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#ffff4444">
+              android:background="@color/hint_foreground_material_light">
+
+    <io.github.omgimanerd.shockwave.customviews.MenuBackgroundView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
     <Button
         android:layout_width="wrap_content"

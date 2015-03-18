@@ -12,9 +12,6 @@ import io.github.omgimanerd.shockwave.util.Util;
 
 import static java.lang.System.currentTimeMillis;
 
-/**
- * Created by omgimanerd on 2/25/15.
- */
 public class Game {
 
   public static final int GAME_BORDER = 10;
@@ -52,6 +49,7 @@ public class Game {
 
   public Game() {
     ball_ = new Ball();
+    ball_.setAllowToScore(true);
     shockwaves_ = new ArrayList<>();
 
     blueScore_ = 0;
@@ -176,22 +174,13 @@ public class Game {
       lastRedTapTime_ = currentTimeMillis();
       shockwaves_.add(new Shockwave(x, y));
     }
-    return;
-  }
-
-  public void reset() {
-    canRedTap_ = true;
-    canBlueTap_ = true;
-    ball_.reset();
-    blueScore_ = 0;
-    redScore_ = 0;
   }
 
   /**
    * Returns WINNER_BLUE if blue won, returns WINNER_RED if red won,
    * returns 0 if no one has
    * won yet.
-   * @return
+   * @return the constant integer value representing who won.
    */
   public int getWinner() {
     if (ball_.getY() <= -ball_.getRadius()) {

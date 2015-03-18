@@ -6,9 +6,6 @@ import android.media.SoundPool;
 
 import java.util.HashMap;
 
-/**
- * Created by omgimanerd on 1/26/15.
- */
 public class Sound {
 
   private static SoundPool soundPool_;

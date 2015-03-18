@@ -3,15 +3,11 @@ package io.github.omgimanerd.shockwave.game;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 import io.github.omgimanerd.shockwave.util.Util;
 
 import static java.lang.System.currentTimeMillis;
 
-/**
- * Created by omgimanerd on 2/25/15.
- */
 public class Shockwave {
 
   private static final float DURATION = 250;

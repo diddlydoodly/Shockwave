@@ -8,9 +8,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-/**
- * Created by omgimanerd on 3/16/15.
- */
 public class HowToPlayActivity extends Activity {
 
   private Button backButton_;

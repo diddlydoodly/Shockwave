@@ -2,9 +2,6 @@ package io.github.omgimanerd.shockwave.util;
 
 import android.graphics.Color;
 
-/**
- * Created by omgimanerd on 2/26/15.
- */
 public class Util {
 
   public static float SCREEN_WIDTH;
