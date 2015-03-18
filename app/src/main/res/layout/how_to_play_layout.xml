@@ -15,7 +15,7 @@
       android:id="@+id/instructionsTextView"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"
-      android:textSize="30sp"
+      android:textSize="25sp"
       android:textColor="#AA000000"
       android:padding="20dp"/>
 

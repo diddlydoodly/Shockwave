@@ -5,7 +5,10 @@
     <string name="play">Play (2P)</string>
     <string name="how_to_play">How to Play</string>
     <string name="instructions">Tap the screen to create a shockwave
-        to push the ball. Push it into the opposing goal to win.</string>
+        to push the ball. This is a demo of how the ball and shockwave physics
+        will work. When playing, push the ball to the opposite side opposite
+        to win.
+    </string>
     <string name="main_menu">Main Menu</string>
     <string name="back">Back</string>
     <string name="blue_wins">Blue Wins!</string>

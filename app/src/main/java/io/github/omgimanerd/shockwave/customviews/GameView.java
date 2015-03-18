@@ -12,14 +12,13 @@ import io.github.omgimanerd.shockwave.game.Game;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * Created by omgimanerd on 2/25/15.
  * Blue = 1 (0 to SCREEN_HEIGHT / 2)
  * Red = 2 (SCREEN_HEIGHT to SCREEN_HEIGHT)
  */
 public class GameView extends View {
 
   private static final int FPS = 80;
-  private static final int MAX_SCORE = 5;
+  private static final int MAX_SCORE = 10;
 
   private long lastUpdateTime_;
 
