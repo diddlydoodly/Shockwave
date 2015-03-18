@@ -15,9 +15,10 @@
       android:id="@+id/instructionsTextView"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"
-      android:textSize="25sp"
+      android:textSize="20sp"
       android:textColor="#AA000000"
-      android:padding="20dp"/>
+      android:padding="20dp"
+      android:enabled="true"/>
 
   <Button
       android:layout_width="match_parent"
