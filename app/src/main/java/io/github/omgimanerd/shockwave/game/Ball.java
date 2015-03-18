@@ -14,6 +14,7 @@ import io.github.omgimanerd.shockwave.util.Util;
 public class Ball {
 
   private static final float MAX_REFLECT_VELOCITY = 15;
+  private static final int BALL_STROKE_COLOR = Color.parseColor("#4C4C4C");
   private static final int BALL_COLOR = Color.parseColor("#B6B6B6");
 
   private float x_;
@@ -29,7 +30,6 @@ public class Ball {
     radius_ = Util.SCREEN_WIDTH / 25;
 
     paint_ = new Paint();
-    paint_.setColor(BALL_COLOR);
   }
 
   public void update(ArrayList<Shockwave> shockwaves) {
@@ -54,6 +54,13 @@ public class Ball {
   }
 
   public void render(Canvas canvas) {
+    paint_.setStyle(Paint.Style.FILL);
+    paint_.setColor(BALL_COLOR);
+    canvas.drawCircle(x_, y_, radius_, paint_);
+
+    paint_.setStyle(Paint.Style.STROKE);
+    paint_.setStrokeWidth(radius_ / 10);
+    paint_.setColor(BALL_STROKE_COLOR);
     canvas.drawCircle(x_, y_, radius_, paint_);
   }
 
