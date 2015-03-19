@@ -10,7 +10,7 @@ import io.github.omgimanerd.shockwave.util.Util;
 
 public class Ball {
 
-  private static final float MAX_REFLECT_VELOCITY = 15;
+  private static final float SCREEN_TO_MAX_VELOCITY_RATIO = 60;
   private static final int BALL_STROKE_COLOR = Color.parseColor("#4C4C4C");
   private static final int BALL_COLOR = Color.parseColor("#B6B6B6");
   private static final float BALL_RADIUS_RATIO = 0.04f;
@@ -19,6 +19,7 @@ public class Ball {
   private float y_;
   private float vx_;
   private float vy_;
+  private float max_reflect_velocity_;
   private float radius_;
   private Paint paint_;
 
@@ -34,6 +35,9 @@ public class Ball {
   public Ball(float x, float y) {
     x_ = x;
     y_ = y;
+    vx_ = 0;
+    vy_ = 0;
+    max_reflect_velocity_ = Util.SCREEN_HEIGHT / SCREEN_TO_MAX_VELOCITY_RATIO;
     radius_ = Util.SCREEN_WIDTH * BALL_RADIUS_RATIO;
     paint_ = new Paint();
 
@@ -66,7 +70,7 @@ public class Ball {
         float reflectAngle = (float) Math.atan2(y_ - shockwave.getY(),
                                                 x_ - shockwave.getX());
         float newVelocity = Math.max((1 - shockwave.getPercentDone()) *
-            MAX_REFLECT_VELOCITY, MAX_REFLECT_VELOCITY / 2);
+            max_reflect_velocity_, max_reflect_velocity_ / 2);
         vx_ = (float) (newVelocity * Math.cos(reflectAngle));
         vy_ = (float) (newVelocity * Math.sin(reflectAngle));
       }
