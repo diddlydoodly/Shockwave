@@ -45,21 +45,28 @@ public class Ball {
   }
 
   public void update() {
-    x_ += vx_;
-    y_ += vy_;
-
-    if (x_ <= radius_) {
+    if (x_ + vx_ <= radius_) {
+      x_ = radius_;
       vx_ = Math.abs(vx_);
-    } else if (x_ > Util.SCREEN_WIDTH - radius_) {
+    } else if (x_ + vx_ >= Util.SCREEN_WIDTH - radius_) {
+      x_ = Util.SCREEN_WIDTH - radius_;
       vx_ = -Math.abs(vx_);
+    } else {
+      x_ += vx_;
     }
 
     if (!allowToScore_) {
-      if (y_ < radius_) {
+      if (y_ + vy_ <= radius_) {
+        y_ = radius_;
         vy_ = Math.abs(vy_);
-      } else if (y_ > Util.SCREEN_HEIGHT - radius_) {
+      } else if (y_ + vx_ >= Util.SCREEN_HEIGHT - radius_) {
+        y_ = Util.SCREEN_HEIGHT - radius_;
         vy_ = -Math.abs(vy_);
+      } else {
+        y_ += vy_;
       }
+    } else {
+      y_ += vy_;
     }
   }
 
