@@ -13,7 +13,7 @@ import static java.lang.System.currentTimeMillis;
 
 /**
  * Blue = 1 (0 to SCREEN_HEIGHT / 2)
- * Red = 2 (SCREEN_HEIGHT to SCREEN_HEIGHT)
+ * Red = 2 (SCREEN_HEIGHT / 2 to SCREEN_HEIGHT)
  */
 public class GameView extends View {
 
