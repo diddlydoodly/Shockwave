@@ -22,13 +22,15 @@ public class GameView extends View {
 
   private long lastUpdateTime_;
 
-  public Game game_;
+  private Game game_;
+  private boolean gameOver_;
 
   public GameView(Context context, AttributeSet attrs) {
     super(context, attrs);
 
     lastUpdateTime_ = currentTimeMillis();
     game_ = new Game();
+    gameOver_ = false;
   }
 
   public void onDraw(Canvas canvas) {
@@ -41,14 +43,19 @@ public class GameView extends View {
     int redScore = game_.getRedScore();
     if (blueScore >= MAX_SCORE) {
       ((GameActivity) getContext()).showLostOverlay(Game.WINNER_BLUE);
+      gameOver_ = true;
     } else if (redScore >= MAX_SCORE) {
       ((GameActivity) getContext()).showLostOverlay(Game.WINNER_RED);
+      gameOver_ = true;
     }
     invalidate();
   }
 
+  // TODO: multi-touch
   public boolean onTouchEvent(MotionEvent event) {
-    game_.onTouchEvent(event);
+    if (!gameOver_) {
+      game_.onTouchEvent(event);
+    }
     return super.onTouchEvent(event);
   }
 }
