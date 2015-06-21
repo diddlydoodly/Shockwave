@@ -51,11 +51,14 @@ public class GameView extends View {
     invalidate();
   }
 
-  // TODO: multi-touch
   public boolean onTouchEvent(MotionEvent event) {
     if (!gameOver_) {
-      game_.onTouchEvent(event);
+      for (int i = 0; i < event.getPointerCount(); ++i) {
+        MotionEvent.PointerCoords tmp = new MotionEvent.PointerCoords();
+        event.getPointerCoords(i, tmp);
+        game_.createShockWave(tmp.x, tmp.y);
+      }
     }
-    return super.onTouchEvent(event);
+    return true;
   }
 }

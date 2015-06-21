@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -153,12 +152,6 @@ public class Game {
     }
     if (currentTimeMillis() > lastRedTapTime_ + MIN_TAP_INTERVAL) {
       canRedTap_ = true;
-    }
-  }
-
-  public void onTouchEvent(MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-      createShockWave(event.getX(), event.getY());
     }
   }
 
